@@ -8,6 +8,15 @@
       "comment": "This is fresh apple",
       "date": "2022-03-01T21:00:00.000Z",
       "id": 1
+    },
+    {
+      "productName": "Mango",
+      "category": "Fruits",
+      "freshness": "Second Hand",
+      "price": 100,
+      "comment": "This is a fresh!",
+      "date": "2022-03-01T21:00:00.000Z",
+      "id": 2
     }
   ],
   "comments": [
