@@ -17,7 +17,7 @@ import {ApiService} from "./services/api.service";
 export class AppComponent implements OnInit {
   title = 'Angular13Crud';
 
-  displayedColumns: string[] = ['productName', 'category', 'date', 'freshness', 'price', 'comment'];
+  displayedColumns: string[] = ['productName', 'category', 'date', 'freshness', 'price', 'comment', 'action'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -36,7 +36,11 @@ export class AppComponent implements OnInit {
   openDialog() {
     this.dialog.open(DialogComponent, {
       width: '30%'
-    });
+    }).afterClosed().subscribe(value => {
+      if (value === 'save') {
+        this.getAllProducts();
+      }
+    })
   }
 
   getAllProducts() {
@@ -49,6 +53,30 @@ export class AppComponent implements OnInit {
         },
         error: (err) => {
           alert("Error while fetching the Records!!")
+        }
+      })
+  }
+
+  editProduct(row: any) {
+    this.dialog.open(DialogComponent, {
+      width: '30%',
+      data: row
+    }).afterClosed().subscribe(value => {
+      if (value === 'update') {
+        this.getAllProducts();
+      }
+    })
+  }
+
+  deleteProduct(id: number) {
+    this.api.deleteProduct(id)
+      .subscribe({
+        next: (res) => {
+          alert("Product Deleted Successfully");
+          this.getAllProducts();
+        },
+        error: () => {
+          alert("Error while deleting the product!!");
         }
       })
   }
